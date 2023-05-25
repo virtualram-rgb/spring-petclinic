@@ -23,15 +23,6 @@ pipeline {
                 )
             }
         }
-        stage('exec maven'){
-            steps{
-                rtmavenRun (
-                    timeout(time: 1, unit: 'HOURS') {
-                        waitForQualityGate abortPipeline: true
-                    }
-                )
-            }
-        }
         stage('Publishtheartifacts'){
             steps{
                 rtPublishBuildInfo (
