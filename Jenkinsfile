@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage ('Git clone') {
             steps {
-                git url: 'git@github.com:virtualram-rgb/spring-petclinic.git', branch: 'main'
+                git url: 'https://github.com/virtualram-rgb/spring-petclinic.git', branch: 'main'
             }
         }
         stage ('build') {
