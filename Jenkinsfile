@@ -8,9 +8,18 @@ pipeline {
         }
         stage ('build') {
             steps {
-                withSonarqubeEnv('SONAR-QUBE'){
+                withSonarQubeEnv('SONAR-QUBE'){
                     sh 'mvn clean install sonar:sonar'
                 }
+            }
+        }
+        stage('exec maven'){
+            steps{
+                rtmavenRun (
+                    timeout(time: 1, unit: 'HOURS') {
+                        waitForQualityGate abortPipeline: true
+                    }
+                )
             }
         }
         stage('artifactory'){
