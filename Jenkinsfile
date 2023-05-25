@@ -18,8 +18,8 @@ pipeline {
                 rtMavenDeployer (
                     id: "MAVEN_DEPLOYER" ,
                     serverId: 'jfrog_instance'
-                    releaseRepo: 'virtualhost-libs-release-local'
-                    snapshotRepo: 'virtualhost-libs-snapshot-local'
+                    releaseRepo: 'libs-release-local'
+                    snapshotRepo: 'libs-snapshot-local'
                 )
             }
         }
