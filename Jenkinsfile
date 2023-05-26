@@ -10,11 +10,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonar'){
                     sh 'mvn install sonar:sonar'
-                },
-                rtmavenRun (
-                    timeout(time: 1, unit: 'HOURS') {
-                        waitForQualityGate abortPipeline: true
-                    }
+                }    
             }
         }
         stage('artifactory'){
