@@ -6,11 +6,14 @@ pipeline {
                 git url: 'https://github.com/virtualram-rgb/spring-petclinic.git', branch: 'main'
             }
         }
-        stage ('build') {
+        stage ('Exec Maven') {
             steps {
-                withSonarQubeEnv('sonar'){
-                    sh 'mvn install sonar:sonar'
-                }    
+                rtMavenRun (
+                    tool: mvn,
+                    pom: 'pom.xml',
+                    goals: 'clean install sonar:sonar',
+                    deployerId: "MAVEN_DEPLOYER"
+                )
             }
         }
         stage('artifactory'){
