@@ -9,7 +9,7 @@ pipeline {
         stage ('build') {
             steps {
                 withSonarQubeEnv('sonar'){
-                    sh 'mvn install sonar:sonar'
+                    sh 'mvn sonar:sonar'
                 }
             }
         }
@@ -18,7 +18,11 @@ pipeline {
                 rtmavenRun (
                     timeout(time: 1, unit: 'HOURS') {
                         waitForQualityGate abortPipeline: true
-                    }
+                    },
+                    tool: mvn, // Tool name from Jenkins configuration
+                    pom: 'pom.xml',
+                    goals: 'clean install',
+                    deployerId: "MAVEN_DEPLOYER"
                 )
             }
         }
