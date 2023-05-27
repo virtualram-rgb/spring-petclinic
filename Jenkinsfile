@@ -8,7 +8,7 @@ pipeline{
         }
         stage ('build') {
             steps {
-                withSonarQubeEnv('sonar'){
+                withSonarQubeEnv('SONAR_SELF_HOSTED'){
                     sh 'mvn install sonar:sonar'
                 }
             }
