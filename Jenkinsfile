@@ -1,36 +1,24 @@
-pipeline {
-    agent any
-    stages {
+pipeline{
+    agent { lable 'build_node' } 
+    stages{
         stage ('Git clone') {
             steps {
                 git url: 'https://github.com/virtualram-rgb/spring-petclinic.git', branch: 'main'
             }
         }
-        stage ('Exec Maven') {
-            steps {
-                rtMavenRun (
-                    tool: "mvn_1",
-                    pom: "pom.xml",
-                    goals: "clean install sonar:sonar",
-                    deployerId: "MAVEN_DEPLOYER"
-                )
+        stage('build'){
+            steps{
+                sh 'mvn package'
             }
         }
-        stage('artifactory'){
+        stage('test'){
             steps{
-                rtMavenDeployer (
-                    id: "MAVEN_DEPLOYER",
-                    serverId: "jfrog_instance",
-                    releaseRepo: 'libs-release-local',
-                    snapshotRepo: 'libs-snapshot-local'
-                )
+                sh 'mvn sonar:sonar'
             }
         }
-        stage('Publishtheartifacts'){
+        stage('deploytheartifacts'){
             steps{
-                rtPublishBuildInfo (
-                    serverId: 'jfrog_instance'
-                )
+                sh'mvn deploy'
             }
         }
     }
