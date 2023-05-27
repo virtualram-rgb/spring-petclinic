@@ -9,7 +9,7 @@ pipeline {
         stage ('Exec Maven') {
             steps {
                 rtMavenRun (
-                    tool: "mvn",
+                    tool: "mvn_1",
                     pom: "pom.xml",
                     goals: "clean install sonar:sonar",
                     deployerId: "MAVEN_DEPLOYER"
