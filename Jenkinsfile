@@ -8,7 +8,8 @@ pipeline{
         }
         stage('build'){
             steps{
-                sh 'mvn package'
+                sh 'mvn package',
+                tool: 'mvn_1'
             }
         }
         stage('test'){
